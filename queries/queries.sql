@@ -179,7 +179,7 @@ FROM fabricante f LEFT JOIN producto p ON f.codigo = p.codigo_fabricante
 WHERE p.codigo IS NULL;
 
 -- 36. Retorna tots els productes del fabricant Lenovo. (Sense utilitzar INNER JOIN).
-SELECT p.codigo as codigo, p.nombre as nombre, p.precio as precio, p.codigo_fabricante as fabricante
+SELECT p.codigo as codigo, p.nombre as nombre, p.precio as precio, p.codigo_fabricante as 'fabricante'
 FROM producto p
 WHERE p.codigo_fabricante = (SELECT f.codigo
                              FROM fabricante f
@@ -205,7 +205,7 @@ LIMIT 1;
 SELECT p.nombre as nombre
 FROM producto p
 WHERE p.precio =
-      (SELECT MAX(p1.precio)
+      (SELECT MIN(p1.precio)
        FROM producto p1
        WHERE p1.codigo_fabricante = (
            SELECT f.codigo
@@ -226,7 +226,7 @@ WHERE p.precio >= (SELECT MAX(p1.precio)
                                                  WHERE LOWER(f.nombre) = 'lenovo'));
 
 -- 41. Llista tots els productes del fabricant Asus que tenen un preu superior al preu mitjà de tots els seus productes.
-SELECT p.codigo as codigo, p.nombre as nombre, p.precio as precio, p.codigo_fabricante as fabricante
+SELECT p.codigo as codigo, p.nombre as nombre, p.precio as precio, p.codigo_fabricante as 'fabricante'
 FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo
 WHERE p.precio >
       (SELECT AVG(p1.precio)
